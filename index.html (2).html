@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amanda Kiernan - Programming Librarian & Web Designer</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-navy: #1e3a5f;
+            --slate-gray: #4a5568;
+            --charcoal: #2d3748;
+            --accent-teal: #4a9c9c;
+            --accent-blue: #5a8fc4;
+            --light-bg: #f7fafc;
+            --white: #ffffff;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+        }
+
+        body {
+            font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--light-bg);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-teal);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-navy);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--charcoal) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-teal);
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent-teal);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(74, 156, 156, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary-navy);
+        }
+
+        /* Section Styles */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary-navy);
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-teal);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .skill-category h3 {
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-category li::before {
+            content: '▹';
+            color: var(--accent-teal);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Portfolio Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .portfolio-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-blue) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-card:hover .portfolio-image::after {
+            opacity: 1;
+        }
+
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+
+        .portfolio-content h3 {
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .portfolio-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .portfolio-link {
+            color: var(--accent-teal);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .portfolio-link:hover {
+            gap: 1rem;
+        }
+
+        /* Experience Section */
+        .experience-container {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .experience-item {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .experience-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .experience-header:hover .experience-title {
+            color: var(--accent-teal);
+        }
+
+        .experience-title {
+            font-size: 1.4rem;
+            color: var(--primary-navy);
+            margin-bottom: 0.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .experience-company {
+            color: var(--accent-teal);
+            font-weight: 600;
+        }
+
+        .experience-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .experience-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .experience-details.active {
+            max-height: 1000px;
+        }
+
+        .experience-details ul {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .experience-details li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: var(--white);
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.5rem;
+            background: var(--light-bg);
+            border-radius: 12px;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: var(--accent-teal);
+            color: var(--white);
+            transform: translateY(-5px);
+        }
+
+        .contact-item a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover a {
+            color: var(--white);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem 0;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                max-height: 300px;
+            }
+
+            .nav-menu li {
+                padding: 1rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .portfolio-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">Amanda Kiernan</div>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Amanda Kiernan</h1>
+            <p class="subtitle">Programming Librarian & Web Designer</p>
+            <p>Designing digital experiences that connect people with information. Specializing in web design, digital content management, and technology instruction with a passion for continuous learning and innovation.</p>
+            <div class="hero-buttons">
+                <a href="#portfolio" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="experience-container">
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.1rem; text-align: center; max-width: 800px; margin: 0 auto;">
+                Programming Librarian with over a decade of experience designing and managing digital platforms that support public engagement and access to information. I combine strong technical skills in web design, video production, and data management with a commitment to creating accessible, user-centered digital experiences. Passionate about exploring emerging technologies—including AI—and applying innovative solutions to improve how people interact with information and services.
+            </p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section" id="skills">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Web Design & Development</h3>
+                <ul>
+                    <li>Wix Platform Expert</li>
+                    <li>HTML/CSS</li>
+                    <li>UX/UI Design</li>
+                    <li>Responsive Design</li>
+                    <li>Google Analytics</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Creative & Production</h3>
+                <ul>
+                    <li>Adobe Premiere Pro</li>
+                    <li>Adobe Photoshop</li>
+                    <li>Adobe Illustrator</li>
+                    <li>Adobe InDesign</li>
+                    <li>Video Production & Editing</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Library Systems & Data</h3>
+                <ul>
+                    <li>Koha Library Software</li>
+                    <li>Sierra ILS</li>
+                    <li>Database Management</li>
+                    <li>Statistics & Reporting</li>
+                    <li>Digital Content Organization</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Professional Skills</h3>
+                <ul>
+                    <li>Technology Instruction</li>
+                    <li>Program Development</li>
+                    <li>Project Management</li>
+                    <li>AI Adoption & Integration</li>
+                    <li>Cross-Functional Leadership</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="section" id="portfolio">
+        <h2 class="section-title">Web Design Portfolio</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-card" onclick="window.open('https://www.chefshayskitchen.com/', '_blank')">
+                <div class="portfolio-image">🍳</div>
+                <div class="portfolio-content">
+                    <h3>Chef Shay's Kitchen</h3>
+                    <p>Designed and built a complete small business website using Wix, including original logo creation, visual branding, site structure, and ongoing content management.</p>
+                    <a href="https://www.chefshayskitchen.com/" target="_blank" class="portfolio-link">Visit Site →</a>
+                </div>
+            </div>
+            <div class="portfolio-card" onclick="window.open('https://wendyeverettart.wixsite.com/gold', '_blank')">
+                <div class="portfolio-image">🎨</div>
+                <div class="portfolio-content">
+                    <h3>Wendy Everett - Artist Portfolio</h3>
+                    <p>Rebuilt an artist's website from the ground up using Wix, designing the site structure and layout, integrating photography, and optimizing the presentation of artwork.</p>
+                    <a href="https://wendyeverettart.wixsite.com/gold" target="_blank" class="portfolio-link">Visit Site →</a>
+                </div>
+            </div>
+            <div class="portfolio-card" onclick="window.open('https://kl.fourarts.bywatersolutions.com', '_blank')">
+                <div class="portfolio-image">📚</div>
+                <div class="portfolio-content">
+                    <h3>Four Arts King Library Catalog</h3>
+                    <p>Manage the design, layout, and user flow of the library's Koha-based online catalog. Produced 100+ book discussion videos using Adobe Premiere Pro.</p>
+                    <a href="https://kl.fourarts.bywatersolutions.com" target="_blank" class="portfolio-link">Visit Site →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="section" id="experience">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="experience-container">
+            <div class="experience-item">
+                <div class="experience-header" onclick="toggleExperience(this)">
+                    <div>
+                        <h3 class="experience-title">Programming Librarian</h3>
+                        <p class="experience-company">The Society of the Four Arts - Palm Beach, FL</p>
+                    </div>
+                    <p class="experience-date">Sept 2013 - Present</p>
+                </div>
+                <div class="experience-details">
+                    <ul>
+                        <li>Design and coordinate adult and teen programs, including grant-funded author series and technology-focused workshops on AI and emerging technologies</li>
+                        <li>Produce and edit 100+ book discussion videos using Adobe Premiere Pro, organizing digital content for patron access through the library catalog</li>
+                        <li>Provide one-on-one technology instruction covering website creation, social media guidance, and device support</li>
+                        <li>Develop marketing materials for all library programs using Adobe Creative Cloud</li>
+                        <li>Manage library membership database and coordinate 25+ volunteers</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="experience-item">
+                <div class="experience-header" onclick="toggleExperience(this)">
+                    <div>
+                        <h3 class="experience-title">Circulation Clerk</h3>
+                        <p class="experience-company">Orange County Library System - Orlando, FL</p>
+                    </div>
+                    <p class="experience-date">June 2012 - July 2013</p>
+                </div>
+                <div class="experience-details">
+                    <ul>
+                        <li>Provided front-line patron support in a high-volume public library environment</li>
+                        <li>Processed materials using the library ILS system</li>
+                        <li>Assisted with programming for children, teens, and adults</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="experience-item">
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--primary-navy); margin-bottom: 1rem;">Education</h3>
+                    <div style="margin-bottom: 1rem;">
+                        <p style="font-weight: 600; color: var(--charcoal);">Master of Library & Information Science (MLIS)</p>
+                        <p style="color: var(--text-secondary);">Florida State University | GPA 4.0 | May 2019</p>
+                    </div>
+                    <div>
+                        <p style="font-weight: 600; color: var(--charcoal);">Bachelor of Arts - Political Science & International Relations</p>
+                        <p style="color: var(--text-secondary);">University of Central Florida | Cum Laude, GPA 3.7 | May 2010</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <span style="font-size: 2rem;">📧</span>
+                <a href="mailto:akiernan@fourarts.org">akiernan@fourarts.org</a>
+            </div>
+            <div class="contact-item">
+                <span style="font-size: 2rem;">📱</span>
+                <a href="tel:5613179583">(561) 317-9583</a>
+            </div>
+            <div class="contact-item">
+                <span style="font-size: 2rem;">📍</span>
+                <span>West Palm Beach, FL</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Amanda Kiernan. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.getElementById('navbar').offsetHeight;
+                    const targetPosition = target.offsetTop - navHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-container')) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Navbar scroll effect
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Toggle experience details
+        function toggleExperience(header) {
+            const details = header.nextElementSibling;
+            const allDetails = document.querySelectorAll('.experience-details');
+            
+            // Close all other details
+            allDetails.forEach(detail => {
+                if (detail !== details && detail.classList.contains('active')) {
+                    detail.classList.remove('active');
+                }
+            });
+            
+            // Toggle current details
+            details.classList.toggle('active');
+        }
+
+        // Auto-expand first experience item
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstDetails = document.querySelector('.experience-details');
+            if (firstDetails) {
+                firstDetails.classList.add('active');
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all skill categories and portfolio cards
+        document.querySelectorAll('.skill-category, .portfolio-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
